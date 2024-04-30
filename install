@@ -38,7 +38,7 @@ read ROOT # mount on /
 print "creating your partitions filesystems"
 mkfs.ext4 "$ROOT"
 mkswap "$SWAP"
-mkfs.fat -F 32 "BOOT"
+mkfs.fat -F 32 "$BOOT"
 
 # mounting filesystems
 print "mouting your partitions"
