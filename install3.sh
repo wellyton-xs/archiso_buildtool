@@ -45,7 +45,7 @@ print "generate fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
 
 print "join into system with arch-chroot"
-arch-chroot /mnt
+arch-chroot /mnt /bin/bash <<EOF
 
 print "set zoneinfo to localtime file"
 ln -sf /usr/share/zoneinfo/America/Bahia /etc/localtime
@@ -75,3 +75,5 @@ grub-install --target=x86_64-efi --efi-directory=esp --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
 print "installation complete!"
+
+EOF
