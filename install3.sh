@@ -47,31 +47,32 @@ genfstab -U /mnt >> /mnt/etc/fstab
 print "join into system with arch-chroot"
 arch-chroot /mnt /bin/bash <<EOF
 
-print "set zoneinfo to localtime file"
+printf  "%s\n" "set zoneinfo to localtime file"
 ln -sf /usr/share/zoneinfo/America/Bahia /etc/localtime
 hwclock --systohc
 
-print "please, edit locale.gen and choose yours:"
-nano /etc/locale.gen
+printf "%s\n" "creating locale.gen"
+sed -i '/^#en_US.UTF-8/s/^#//' /etc/locale.gen
+sed -i '/^#pt_BR.UTF-8/s/^#//' /etc/locale.gen
 locale-gen
 
-print "generate locale.conf"
-echo "LANG=pt_BR.UTF-8" >> /etc/locale.conf
+printf "%s\n" "generate locale.conf"
+echo "LANG=pt_BR.UTF-8" > /etc/locale.conf
 
-print "setting up keyboard"
-echo "KEYMAP=br-abnt2" >> /etc/vconsole.conf
+printf "%s\n" "setting up keyboard"
+echo "KEYMAP=br-abnt2" > /etc/vconsole.conf
 
-print "create user"
-echo "welly" >> /etc/hostname
+printf "%s\n" "create user"
+echo "welly" > /etc/hostname
 
-print "running mkinitcpio"
+printf "%s\n" "running mkinitcpio"
 mkinitcpio -P
 
-print "choose your password"
+printf "%s\n" "choose your password"
 passwd
 
-print "installing bootloader"
-grub-install --target=x86_64-efi --efi-directory=esp --bootloader-id=GRUB
+printf "%s\n" "installing bootloader"
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
 print "installation complete!"
