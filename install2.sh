@@ -70,5 +70,6 @@ print "instalando pacotes importantes"
 pacman -S grub efibootmgr neworkmanager network-manager-applet dialog wpa_supplicant mtools dosfstools base-devel linux-headers bluez bluez-utils cups xdg-utils xdg-user-dirs alsa-utils pulseaudio pulseaudio-bluetooth git reflector
 
 print "instalando e configurando grub"
+mount "$EFI" /mnt/boot
 grub-install --target=x86_64-efi --efi-directory=boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
