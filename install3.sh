@@ -39,7 +39,7 @@ print "mount $SWAP"
 swapon "$SWAP"
 
 print "installing base system packages"
-pacstrap -K /mnt base linux linux-firmware
+pacstrap -K /mnt base linux linux-firmware grub
 
 print "generate fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -75,6 +75,6 @@ printf "%s\n" "installing bootloader"
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 
-print "installation complete!"
+printf "%s\n" "installation complete!"
 
 EOF
