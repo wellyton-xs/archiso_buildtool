@@ -39,7 +39,7 @@ print "mount $SWAP"
 swapon "$SWAP"
 
 print "installing base system packages"
-pacstrap -K /mnt base linux linux-firmware grub
+pacstrap -K /mnt base linux linux-firmware grub efibootmgr
 
 print "generate fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
