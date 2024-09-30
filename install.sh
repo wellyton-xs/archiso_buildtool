@@ -9,6 +9,7 @@ download_latest(){
 }
 
 check-updates(){
+    print "checking for updates"
     download_latest /tmp/install.sh
     diff install.sh /tmp/install.sh
     if [["$?" == 1]]; then
