@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 ######## CABEÇALHO ########
-# AUTOR: welly <wellyton.offcer@gmail.com>
-# NOME: mkiso.sh
-# USO: automatizar o build de uma iso com archiso
-# COMO UTILIZAR: você precisa ter uma estrutura de diretórios pré-definida:
-#				 diretórios: build, iso, profiles, repo, work
-# 				 basta rodar o script especificando o profile que deseja compilar
-#				 exemplo: mkiso <profile>
+# AUTHOR: welly <wellyton.offcer@gmail.com>
+# NAME: mkiso.sh
+# USE: automatizar o build de uma iso com archiso
+# HOW TO: you need to have a predefined directory structure:
+#				 directories: build, iso, profiles, repo, work
+# 				 just run the script specifying the profile you want to compile
+#				 example: mkiso <profile>
 
 # VARS
 
@@ -22,22 +22,22 @@ mkiso(){
 }
 
 verify_profile(){
-    if [ -z "$profile"  ]; then
-	printf '%s\n' "você não pode passar um profile vazio."
+    if [ -z "$profile" ]; then
+	printf '%s\n' "profile needs to exist"
 	exit 1
     fi
 }
 
 verify_dir(){
-    if [ -z "$1"  ]; then
-	printf '%s\n' "você não pode passar um profile vazio."
+    if [ -z "$1" ]; then
+	printf '%s\n' "this folder: $1 need to exist"
 	exit 1
     fi
 }
 
 verify_root(){
-    if [ ! "$(id -u)" == 0  ]; then
-	printf '%s\n' "você precisa ser root para executar esse script" 
+    if [ ! "$(id -u)" == 0 ]; then
+	printf '%s\n' "you need to be root to run this script" 
 	exit 1
     fi
 }
@@ -48,30 +48,30 @@ clean(){
 
 verify_and_clean(){
     if [ "$(ls -A $workdir)" ]; then
-	printf '%s\n' "diretório não vazio, limpando..."
-	clean 
+	printf '%s\n' "directory not empty, cleaning up..."
+	clean
     fi
 }
 
-# VERIFICANDO ROOT
+# VERIFY ROOT
 
 verify_root
 
-# VERIFICANDO SE OS DIRETÓRIOS EXISTEM
+# VERIFY IF DIRECTORIES EXISTS
 
 verify_profile
 verify_dir "$workdir"
 verify_dir "$outdir"
 
-# VERIFICANDO E LIMPANDO WORK DIR
+# VERIFY AND CLEAN WORK DIR
 
 verify_and_clean
 
-# INICIANDO BUILD
+# INIT BUILD
 
 mkiso
 
-# LIMPANDO WORKDIR APÓS O FINAL DO BUILD
+# CLEANING WORKDIR AFTER BUILD
 
-printf '%s\n' "limpando workdir"
+printf '%s\n' "cleaning workdir"
 clean
