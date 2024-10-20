@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 
-######## CABEÇALHO ########
+######## HEADER ########
 # AUTHOR: welly <wellyton.offcer@gmail.com>
 # NAME: mkiso.sh
-# USE: automatizar o build de uma iso com archiso
+# USE: automate iso building
 # HOW TO: you need to have a predefined directory structure:
 #				 directories: build, iso, profiles, repo, work
 # 				 just run the script specifying the profile you want to compile
 #				 example: mkiso <profile>
 
 # VARS
+
+
+set -e
 
 profile="./profile"
 workdir="./work"
@@ -19,18 +22,12 @@ outdir="./iso"
 
 mkiso(){
     mkarchiso -v -w "$workdir" -o "$outdir" "$profile"
+    exit 0
 }
 
 verify_profile(){
     if [ -z "$profile" ]; then
 	printf '%s\n' "profile needs to exist"
-	exit 1
-    fi
-}
-
-verify_dir(){
-    if [ -z "$1" ]; then
-	printf '%s\n' "this folder: $1 need to exist"
 	exit 1
     fi
 }
@@ -42,8 +39,11 @@ verify_root(){
     fi
 }
 
-clean(){
-    rm -rf "${workdir:?}"/*
+verify_dir(){
+    if [ -z "$1" ]; then
+	printf '%s\n' "this folder: $1 need to exist"
+	exit 1
+    fi
 }
 
 verify_and_clean(){
@@ -51,6 +51,12 @@ verify_and_clean(){
 	printf '%s\n' "directory not empty, cleaning up..."
 	clean
     fi
+    exit 0
+}
+
+clean(){
+    rm -rf "${workdir:?}"/*
+    exit 0
 }
 
 # VERIFY ROOT

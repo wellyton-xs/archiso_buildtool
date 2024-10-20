@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 print(){
 	printf '%s\n' "$1"
 }
